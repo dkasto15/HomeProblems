@@ -12,22 +12,25 @@ def main():
 
 
     # # Ensemble average # #
-    N = 1000 # nbr of realizations
+    N = 100000 # nbr of realizations
     t = 1
     x_ens = 0
     for i in range(N):
         w = uniform(2, 6) # Uniformly randomized number between 2 and 6
+        if i == 0:
+            w1 = w
         x_ens += 2 * np.sin(w*t) # Stoch. proc. val. at arb. time point
     x_ens = 1 / float(N) * x_ens
     print(x_ens)
 
     # # Time average # #
-    M = 1000 # nbr of timesteps
-    w = uniform(2, 6) # Uniformly randomized number between 2 and 6
+    M = 100000 # nbr of timesteps
+    # w = uniform(2, 6) # Uniformly randomized number between 2 and 6
     t = np.linspace(0,1,N) # vector with discrete timesteps
-    x_t = 1 / float(M) * np.sum(2 * np.sin(w*t))
+    x_t = 1 / float(M) * np.sum(2 * np.sin(w1*t))
     print(x_t)
 
+    ''' ^Ergodic means timeAv=ensemAv, this is not the case here. '''
 
 
     ''' Plotting '''
