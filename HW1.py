@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.linalg import eig
 from random import *
 
 
@@ -19,18 +20,60 @@ def main():
         w = uniform(2, 6) # Uniformly randomized number between 2 and 6
         if i == 0:
             w1 = w
-        x_ens += 2 * np.sin(w*t) # Stoch. proc. val. at arb. time point
+        x_ens += 2 * np.sin(w * t) # Stoch. proc. val. at arb. time point
     x_ens = 1 / float(N) * x_ens
     print(x_ens)
 
     # # Time average # #
     M = 100000 # nbr of timesteps
     # w = uniform(2, 6) # Uniformly randomized number between 2 and 6
-    t = np.linspace(0,1,N) # vector with discrete timesteps
-    x_t = 1 / float(M) * np.sum(2 * np.sin(w1*t))
+    t = np.linspace(0,1,M) # vector with discrete timesteps
+    x_t = 1 / float(M) * np.sum(2 * np.sin(w1 * t))
     print(x_t)
 
-    ''' ^Ergodic means timeAv=ensemAv, this is not the case here. '''
+    # # ^Ergodic means timeAv=ensemAv, this is not the case here. # #
+
+    # # # b) # # #
+
+    w0 = 1
+    # # Ensemble average # #
+    N = 10000 # nbr of realizations
+    t = 1
+    x_ens = 0
+    for i in range(N):
+        theta = uniform(0, 2 * np.pi) # Uniformly randomized number between 0 and 2*pi
+        if i == 0:
+            theta1 = theta
+        x_ens += 2 * np.sin(w0 * t + theta) # Stoch. proc. val. at arb. time point
+    x_ens = 1 / float(N) * x_ens
+    print(x_ens)
+
+    # # Time average # #
+    M = 10000 # nbr of timesteps
+    # w = uniform(2, 6) # Uniformly randomized number between 2 and 6
+    t = np.linspace(0,1,M) # vector with discrete timesteps
+    x_t = 1 / float(M) * np.sum(2 * np.sin(w0 * t + theta1))
+    print(x_t)
+
+    # # ^Ergodic means timeAv=ensemAv, this is not the case here. # #
+
+    ''' Task 2 '''
+    # # # 1.a) # # #
+    W = [[1/4.0, 0, 1/8.0], [1/2.0, 1/2.0, 3/4.0], [1/4.0, 1/2.0, 1/8.0]]
+
+    # # # 1.b) # # #
+    distr_0 = [500, 300, 200]
+    distr_1 = np.dot(W, distr_0)
+    print(distr_1)
+
+    # # # 1.c) # # #
+    # W = [[0, 0.25, 0.25], [1/2.0, 1/2.0, 0.25], [0.5, 0.25, 0.5]] From test ex.
+    eig_W, wave = eig(W)
+    max_ind = np.argmax(eig_W)  # index of eigenvalue with value 1
+    P_st = wave[:, max_ind]
+    P_st = P_st / np.sum(P_st)
+    print(P_st, np.sum(P_st))
+    print(np.dot(W, P_st))
 
 
     ''' Plotting '''
