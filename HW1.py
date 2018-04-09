@@ -22,14 +22,14 @@ def main():
             w1 = w
         x_ens += 2 * np.sin(w * t) # Stoch. proc. val. at arb. time point
     x_ens = 1 / float(N) * x_ens
-    print(x_ens)
+    print('1a)', x_ens)
 
     # # Time average # #
     M = 100000 # nbr of timesteps
     # w = uniform(2, 6) # Uniformly randomized number between 2 and 6
     t = np.linspace(0,1,M) # vector with discrete timesteps
     x_t = 1 / float(M) * np.sum(2 * np.sin(w1 * t))
-    print(x_t)
+    print('1a)', x_t)
 
     # # ^Ergodic means timeAv=ensemAv, this is not the case here. # #
 
@@ -46,14 +46,14 @@ def main():
             theta1 = theta
         x_ens += 2 * np.sin(w0 * t + theta) # Stoch. proc. val. at arb. time point
     x_ens = 1 / float(N) * x_ens
-    print(x_ens)
+    print('1b)', x_ens)
 
     # # Time average # #
     M = 10000 # nbr of timesteps
     # w = uniform(2, 6) # Uniformly randomized number between 2 and 6
     t = np.linspace(0,1,M) # vector with discrete timesteps
     x_t = 1 / float(M) * np.sum(2 * np.sin(w0 * t + theta1))
-    print(x_t)
+    print('1b)', x_t)
 
     # # ^Ergodic means timeAv=ensemAv, this is not the case here. # #
 
@@ -64,17 +64,33 @@ def main():
     # # # 1.b) # # #
     distr_0 = [500, 300, 200]
     distr_1 = np.dot(W, distr_0)
-    print(distr_1)
+    print('2.1b)', distr_1)
 
     # # # 1.c) # # #
-    # W = [[0, 0.25, 0.25], [1/2.0, 1/2.0, 0.25], [0.5, 0.25, 0.5]] From test ex.
-    eig_W, wave = eig(W)
-    max_ind = np.argmax(eig_W)  # index of eigenvalue with value 1
-    P_st = wave[:, max_ind]
-    P_st = P_st / np.sum(P_st)
+    # W = np.array([[0, 0.25, 0.25], [1/2.0, 1/2.0, 0.25], [0.5, 0.25, 0.5]]) # From test exself.
+    eig_W_r, eig_vec_r = eig(W) # right eigenvalues/-vectors
+    max_ind = np.argmax(eig_W_r)  # index of eigenvalue with value 1
+    P_st = eig_vec_r[:, max_ind]
+    norm = np.sum(P_st)
+    P_st = P_st / norm
     print(P_st, np.sum(P_st))
     print(np.dot(W, P_st))
 
+
+    # # # 1.d) # # #
+    eig_W_l, eig_vec_l = eig(W, left=True, right=False) # left eigenvalues/-vectors
+    print(eig_W_r)
+    for i in range(len(W)):
+        if i != max_ind:
+            print(eig_W_r[i])
+            a = np.array(eig_vec_r[:, i].reshape(3,1)) # enable mat mult
+            b = np.array(eig_vec_l[:, i].reshape(1,3))  # enable mat mult
+            B = np.dot(a, b)
+            print(B)
+
+
+
+    eig_vec_r = []
 
     ''' Plotting '''
     # fig_1 = plt.figure()
