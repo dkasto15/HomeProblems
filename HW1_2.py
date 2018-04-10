@@ -5,12 +5,8 @@ from random import *
 
 
 def main():
-
-    ''' Variables and constants '''
-
     ''' Task 1 '''
     # # # a) # # #
-
 
     # # Ensemble average # #
     N = 100000 # nbr of realizations
@@ -23,11 +19,12 @@ def main():
         x_ens += 2 * np.sin(w * t) # Stoch. proc. val. at arb. time point
     x_ens = 1 / float(N) * x_ens
     print('1a)', x_ens)
+    print('1a), analytical', 1 / (2 * float(t)) * (np.cos(2 * t) - np.cos(6 * t)))
 
     # # Time average # #
     M = 100000 # nbr of timesteps
     # w = uniform(2, 6) # Uniformly randomized number between 2 and 6
-    t = np.linspace(0,1,M) # vector with discrete timesteps
+    t = np.linspace(0,100000,M) # vector with discrete timesteps
     x_t = 1 / float(M) * np.sum(2 * np.sin(w1 * t))
     print('1a)', x_t)
 
@@ -49,9 +46,9 @@ def main():
     print('1b)', x_ens)
 
     # # Time average # #
-    M = 10000 # nbr of timesteps
+    M = 100000 # nbr of timesteps
     # w = uniform(2, 6) # Uniformly randomized number between 2 and 6
-    t = np.linspace(0,1,M) # vector with discrete timesteps
+    t = np.linspace(0,100000,M) # vector with discrete timesteps
     x_t = 1 / float(M) * np.sum(2 * np.sin(w0 * t + theta1))
     print('1b)', x_t)
 
