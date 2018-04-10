@@ -28,11 +28,12 @@ def main():
     eig_W_l, eig_vec_l = eig(W, left=True, right=False) # left eigenvalues/-vectors
     for i in range(len(W)):
         if i != max_ind:
-            print(eig_W_r[i])
+            print('2.1d: lambda', eig_W_r[i])
             a = np.array(eig_vec_r[:, i].reshape(3,1)) # enable mat mult
             b = np.array(eig_vec_l[:, i].reshape(1,3))  # enable mat mult
             B = np.dot(a, b)
-            print(B)
+            print('2.1d: B', B)
+
 
 
 
