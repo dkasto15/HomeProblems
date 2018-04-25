@@ -73,6 +73,7 @@ def main():
     ax_b_ens.set_ylabel('Ensemble average')
     ax_b_ens.set_xlim([0, t_ens[-1]])
     ax_b_ens.minorticks_on()
+    ax_b_ens.set_ylim([-1, 1])
     ax_b_ens.grid(True, which='major')
     ax_b_ens.grid(True, which='minor', linestyle='--')
     ax_b_ens.legend()

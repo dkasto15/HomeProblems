@@ -15,6 +15,7 @@ lmbd_st = lmbd[n_st]
 P_st = P[:, n_st]
 P_st = P_st/sum(P_st)
 print('P_st analytic: ', P_st)
+
 ''' b) Time evolution of P '''
 
 P_0 = np.array([1, 0, 0])
